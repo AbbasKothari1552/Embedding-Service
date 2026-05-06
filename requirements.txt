@@ -1,0 +1,8 @@
+
+dotenv
+fastapi
+uvicorn
+python-multipart
+python-dotenv
+pydantic-settings
+sentence-transformers

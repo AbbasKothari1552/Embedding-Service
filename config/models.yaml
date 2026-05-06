@@ -1,0 +1,11 @@
+models:
+  - name: all-MiniLM-L6-v2
+    provider: local
+    path: models/all-MiniLM-L6-v2
+
+  # - name: bge-small-en
+  #   provider: local
+  #   path: models/bge-small-en
+
+  # - name: text-embedding-3-small
+  #   provider: openai
