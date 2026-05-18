@@ -15,24 +15,19 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better caching
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt ./
+RUN pip install --no-cache-dir \
+    --extra-index-url https://download.pytorch.org/whl/cpu \
+    torch \
+ && pip install --no-cache-dir -r requirements.txt
 
-# Install FastAPI and uvicorn (core dependencies)
-RUN pip install --no-cache-dir fastapi uvicorn[standard] pydantic pydantic-settings python-dotenv
+# Copy necessary files to the container
+COPY app ./app
+COPY config ./config
 
-# Copy the entire project
-COPY . .
-
-# Create logs directory
-RUN mkdir -p logs
 
 # Expose port 8000
 EXPOSE 8000
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" || exit 1
 
 # Run the application
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

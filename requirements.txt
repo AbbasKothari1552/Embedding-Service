@@ -1,8 +1,10 @@
-
-dotenv
 fastapi
-uvicorn
+uvicorn[standard]
 python-multipart
 python-dotenv
 pydantic-settings
+
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+torch
 sentence-transformers
